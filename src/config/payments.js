@@ -1,48 +1,46 @@
-export const CREDIT_PACKS = [50, 100, 200, 500];   // this credit to manoy value pairs 10 credits means 10 rupee
+export const CREDIT_PACKS = [10, 20, 50, 100];
 
 export const PLAN_IDS = {
     UNLIMITED_YEARLY: {
-        id:'plan_Qq8G0G08Fg8viY',
+        id: 'plan_QoFXepjBYTR3qB',
         planName: 'Unlimited Yearly',
-        description:'Yearly subscription,2months free',
+        description: 'Yearly subscription, 2 months free',
         totalBillingCycleCount: 5
     },
     UNLIMITED_MONTHLY: {
-        id: 'plan_Qq8C7TTwwT9lDg',
+        id: 'plan_QoFVv8WQwBXdua',
         planName: 'Unlimited Monthly',
-        description:'Monthly subscription',
+        description: 'Monthly subscription',
         totalBillingCycleCount: 12
     }
 };
 
-
-export const pricingList=[
+export const pricingList = [
     {
-        price:"Credit Packs",
-        list:[
-            {details:"10 CREDITS FOR ₹10",},
-            {details:"20 CREDITS FOR ₹20",},
-            {details:"50 CREDITS FOR ₹50",},
-            {details:"100 CREDITS FOR ₹100",}
+        price: "Credit Packs",
+        list: [
+            { detail: "10 CREDITS FOR ₹10", },
+            { detail: "20 CREDITS FOR ₹20", },
+            { detail: "50 CREDITS FOR ₹50", },
+            { detail: "100 CREDITS FOR ₹100", },
         ],
     },
-     {
-        price:"Unlimited Monthly",
-        list:[
-            {details:"Unlimited LINKS",},
-            {details:"AUTO RENEWED",},
-            {details:"CHARGED MONTHLY",},
-            {details:"CANCEL ANYTIME",}
+    {
+        price: "Unlimited Monthly",
+        list: [
+            { detail: "UNLIMITED LINKS", },
+            { detail: "AUTO RENEWED", },
+            { detail: "CHARGED MONTHLY", },
+            { detail: "CANCEL ANYTIME", },
         ],
     },
-     {
-        price:"Unlimited YEARLY",
-        list:[
-            {details:"Unlimited LINKS",},
-            {details:"AUTO RENEWED",},
-            {details:"CHARGED YEARLY",},
-            {details:"CANCEL ANYTIME",}
+    {
+        price: "Unlimited Yearly",
+        list: [
+            { detail: "UNLIMITED LINKS", },
+            { detail: "AUTO RENEWED", },
+            { detail: "CHARGED YEARLY", },
+            { detail: "CANCEL ANYTIME", },
         ],
     },
-
 ];

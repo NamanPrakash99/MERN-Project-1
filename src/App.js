@@ -17,7 +17,7 @@ import ManageUsers from "./pages/users/ManageUsers";
 import UnauthorizedAccess from "./components/UnauthorizedAccess";
 import ProtectedRoute from "./rbac/ProtectedRoute";
 import ManagePayments from "./pages/payments/ManagePayments";
-import Analyticsdashboard from "./pages/links/Analyticsdashboard";
+import AnalyticsDashboard from "./pages/links/AnalyticsDashboard";
 
 function App() {
   // const [userDetails, setUserDetails] = useState(null);
@@ -30,7 +30,6 @@ function App() {
       const response = await axios.post(`${serverEndpoint}/auth/is-user-logged-in`, {}, {
         withCredentials: true
       });
-      // updateUserDetails(response.data.user);
       dispatch({
         type: SET_USER,
         payload: response.data.user
@@ -101,8 +100,11 @@ function App() {
         <UserLayout><ManagePayments /></UserLayout> :
         <Navigate to="/login" />} />
       <Route path="/analytics/:id" element={userDetails ?
-        <UserLayout><Analyticsdashboard /></UserLayout> :
-        <Navigate to="/login" />} />
+        <UserLayout>
+          <AnalyticsDashboard />
+        </UserLayout> :
+        <Navigate to="/login" />
+      } />
     </Routes>
   );
 }
