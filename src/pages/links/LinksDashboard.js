@@ -170,7 +170,7 @@ function LinksDashboard() {
         { field: 'category', headerName: 'Category', flex: 2 },
         { field: 'clickCount', headerName: 'Clicks', flex: 1 },
         {
-            field: 'action', headerName: 'Clicks', flex: 1, renderCell: (params) => (
+            field: 'action', headerName: 'Clicks', flex: 1.5, renderCell: (params) => (
                 <>
                     {permission.canEditLink && (
                         <IconButton>
