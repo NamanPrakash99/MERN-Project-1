@@ -130,7 +130,7 @@ function LinksDashboard() {
                     category: ""
                 });
             } catch (error) {
-                setErrors({ message: 'Unable to add the Link, please try again' });
+                setErrors({ message: error.response?.data?.message || 'Unable to add the Link, please try again' });
             } finally {
                 handleCloseModal();
             }

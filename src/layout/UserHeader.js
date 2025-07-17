@@ -1,9 +1,28 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Can from "../rbac/Can";
+import axios from "axios";
+import { serverEndpoint } from "../config/config";
+import { useState } from "react";
 
 function UserHeader() {
     const userDetails = useSelector((state) => state.userDetails);
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    const handleResetPassword = async () => {
+        setError("");
+        setLoading(true);
+        try {
+            await axios.post(`${serverEndpoint}/auth/send-reset-password-token`, { email: userDetails.email });
+            navigate("/reset-password", { state: { email: userDetails.email } });
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to send reset code.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <nav className="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
@@ -51,6 +70,11 @@ function UserHeader() {
                                     </li>
                                 </Can>
                                 <li>
+                                    <button className="dropdown-item" onClick={handleResetPassword} disabled={loading}>
+                                        {loading ? "Sending..." : "Reset Password"}
+                                    </button>
+                                </li>
+                                <li>
                                     <Link className="dropdown-item" to="/logout">
                                         Logout
                                     </Link>
@@ -58,6 +82,11 @@ function UserHeader() {
                             </ul>
                         </li>
                     </ul>
+                    {error && (
+                        <div className="alert alert-danger text-center mb-0" role="alert">
+                            {error}
+                        </div>
+                    )}
                 </div>
             </div>
         </nav>
