@@ -187,144 +187,146 @@ function ManageUsers() {
     ];
 
     return (
-        <div className="container py-4">
-
-            <div className="d-flex justify-content-between mb-3">
-                <h2>Manage Users</h2>
-                <button className='btn btn-primary btn-sm' onClick={() => handleModalShow(false)}>Add</button>
-            </div>
-
-            {errors.message && (
-                <div className="alert alert-danger" role="alert">
-                    {errors.message}
+        <div
+            className="d-flex align-items-center justify-content-center"
+            style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%)' }}
+        >
+            <div className="p-5 bg-white rounded-4 shadow-lg w-100" style={{ maxWidth: 1100 }}>
+                <div className="d-flex justify-content-between mb-3 align-items-center">
+                    <h2 className="mb-0" style={{ fontWeight: 700, color: '#1e293b' }}>Manage Users</h2>
+                    <button className='btn btn-primary btn-sm px-4 py-2' onClick={() => handleModalShow(false)}>Add</button>
                 </div>
-            )}
+                {errors.message && (
+                    <div className="alert alert-danger" role="alert">
+                        {errors.message}
+                    </div>
+                )}
+                <div style={{ height: 500, width: '100%' }}>
+                    <DataGrid
+                        getRowId={(row) => row._id}
+                        rows={usersData}
+                        columns={columns}
+                        initialState={{
+                            pagination: {
+                                paginationModel: { pageSize: 20, page: 0 },
+                            },
+                        }}
+                        pageSizeOptions={[20, 50, 100]}
+                        disableRowSelectionOnClick
+                        showToolbar
+                        sx={{
+                            fontFamily: 'inherit'
+                        }}
+                        loading={loading}
+                    />
+                </div>
 
-            <div style={{ height: 500, width: '100%' }}>
-                <DataGrid
-                    getRowId={(row) => row._id}
-                    rows={usersData}
-                    columns={columns}
-                    initialState={{
-                        pagination: {
-                            paginationModel: { pageSize: 20, page: 0 },
-                        },
-                    }}
-                    pageSizeOptions={[20, 50, 100]}
-                    disableRowSelectionOnClick
-                    showToolbar
-                    sx={{
-                        fontFamily: 'inherit'
-                    }}
-                    loading={loading}
-                />
-            </div>
+                <Modal show={showModal} onHide={handleModalClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{isEdit ? (<>Edit User</>) : (<>Add User</>)}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-3">
+                                <label htmlFor="email" className="form-label">Email</label>
+                                <input
+                                    type="text"
+                                    className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                                    id="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                />
+                                {errors.email && (
+                                    <div className="invalid-feedback">
+                                        {errors.email}
+                                    </div>
+                                )}
+                            </div>
 
-            <Modal show={showModal} onHide={handleModalClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{isEdit ? (<>Edit User</>) : (<>Add User</>)}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                            <label htmlFor="email" className="form-label">Email</label>
-                            <input
-                                type="text"
-                                className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-                                id="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                            />
-                            {errors.email && (
-                                <div className="invalid-feedback">
-                                    {errors.email}
-                                </div>
-                            )}
-                        </div>
+                            <div className="mb-3">
+                                <label htmlFor="name" className="form-label">Name</label>
+                                <input
+                                    type="text"
+                                    className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                                    id="name"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                />
+                                {errors.name && (
+                                    <div className="invalid-feedback">
+                                        {errors.name}
+                                    </div>
+                                )}
+                            </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="name" className="form-label">Name</label>
-                            <input
-                                type="text"
-                                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-                                id="name"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                            />
-                            {errors.name && (
-                                <div className="invalid-feedback">
-                                    {errors.name}
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="mb-3">
-                            <label htmlFor="role" className="form-label">Role</label>
-                            <select name="role" value={formData.role}
-                                onChange={handleChange}
-                                className={`form-control ${errors.role ? 'is-invalid' : ''}`}
-                            >
-                                <option key="select" value="">
-                                    Select
-                                </option>
-                                {USER_ROLES.map((role) => (
-                                    <option key={role} value={role}>
-                                        {role.charAt(0).toUpperCase() + role.slice(1)}
+                            <div className="mb-3">
+                                <label htmlFor="role" className="form-label">Role</label>
+                                <select name="role" value={formData.role}
+                                    onChange={handleChange}
+                                    className={`form-control ${errors.role ? 'is-invalid' : ''}`}
+                                >
+                                    <option key="select" value="">
+                                        Select
                                     </option>
-                                ))}
-                            </select>
-                            {errors.role && (
-                                <div className="invalid-feedback">
-                                    {errors.role}
-                                </div>
-                            )}
-                        </div>
+                                    {USER_ROLES.map((role) => (
+                                        <option key={role} value={role}>
+                                            {role.charAt(0).toUpperCase() + role.slice(1)}
+                                        </option>
+                                    ))}
+                                </select>
+                                {errors.role && (
+                                    <div className="invalid-feedback">
+                                        {errors.role}
+                                    </div>
+                                )}
+                            </div>
 
-                        <div className="d-grid">
-                            {formLoading ? (
-                                <button className="btn btn-primary" type="button" disabled="">
-                                    <span className="spinner-border spinner-border-sm" aria-hidden="true" />
-                                    <span className="visually-hidden" role="status">
-                                        Loading...
-                                    </span>
-                                </button>
-                            ) : (
-                                <button type="submit" className="btn btn-primary">Submit</button>
-                            )}
+                            <div className="d-grid">
+                                {formLoading ? (
+                                    <button className="btn btn-primary" type="button" disabled="">
+                                        <span className="spinner-border spinner-border-sm" aria-hidden="true" />
+                                        <span className="visually-hidden" role="status">
+                                            Loading...
+                                        </span>
+                                    </button>
+                                ) : (
+                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                )}
 
-                        </div>
-                    </form>
-                </Modal.Body>
-            </Modal>
+                            </div>
+                        </form>
+                    </Modal.Body>
+                </Modal>
 
-            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal()}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirm Delete</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    Are you sure you want to delete this link?
-                </Modal.Body>
-                <Modal.Footer>
-                    <button className="btn btn-secondary" onClick={() => setShowDeleteModal()}>
-                        Cancel
-                    </button>
-                    {formLoading ? (
-                        <button className="btn btn-danger" type="button" disabled="">
-                            <span className="spinner-border spinner-border-sm" aria-hidden="true" />
-                            <span className="visually-hidden" role="status">
-                                Loading...
-                            </span>
+                <Modal show={showDeleteModal} onHide={() => setShowDeleteModal()}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Confirm Delete</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Are you sure you want to delete this link?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-secondary" onClick={() => setShowDeleteModal()}>
+                            Cancel
                         </button>
-                    ) : (
-                        <button className="btn btn-danger" onClick={handleDeleteSubmit}>
-                            Delete
-                        </button>
-                    )}
+                        {formLoading ? (
+                            <button className="btn btn-danger" type="button" disabled="">
+                                <span className="spinner-border spinner-border-sm" aria-hidden="true" />
+                                <span className="visually-hidden" role="status">
+                                    Loading...
+                                </span>
+                            </button>
+                        ) : (
+                            <button className="btn btn-danger" onClick={handleDeleteSubmit}>
+                                Delete
+                            </button>
+                        )}
 
-                </Modal.Footer>
-            </Modal>
+                    </Modal.Footer>
+                </Modal>
+            </div>
         </div>
     );
 }

@@ -197,129 +197,128 @@ function LinksDashboard() {
     ];
 
     return (
-        <div className="container py-4">
-            <div className="d-flex justify-content-between mb-3">
-                <h2>Manage Affiliate Links</h2>
-                {permission.canCreateLink && (
-                    <button className="btn btn-primary btn-sm" onClick={() => handleOpenModal(false)}>
-                        Add
-                    </button>
-                )}
-            </div>
-
-            {errors.message && (
-                <div className="alert alert-danger" role="alert">
-                    {errors.message}
+        <div
+            className="d-flex align-items-center justify-content-center"
+            style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%)' }}
+        >
+            <div className="p-5 bg-white rounded-4 shadow-lg w-100" style={{ maxWidth: 1100 }}>
+                <div className="d-flex justify-content-between mb-3 align-items-center">
+                    <h2 className="mb-0" style={{ fontWeight: 700, color: '#1e293b' }}>Manage Affiliate Links</h2>
+                    {permission.canCreateLink && (
+                        <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => handleOpenModal(false)}>
+                            Add
+                        </button>
+                    )}
                 </div>
-            )}
+                {errors.message && (
+                    <div className="alert alert-danger" role="alert">
+                        {errors.message}
+                    </div>
+                )}
+                <div style={{ height: 500, width: '100%' }}>
+                    <DataGrid
+                        getRowId={(row) => row._id}
+                        rows={linksData}
+                        columns={columns}
+                        initialState={{
+                            pagination: {
+                                paginationModel: { pageSize: 20, page: 0 }
+                            }
+                        }}
+                        pageSizeOptions={[20, 50, 100]}
+                        disableRowSelectionOnClick
+                        showToolbar
+                        sx={{
+                            fontFamily: 'inherit'
+                        }}
+                        density='compact'
+                    />
+                </div>
 
-            <div style={{ height: 500, width: '100%' }}>
-                <DataGrid
-                    getRowId={(row) => row._id}
-                    rows={linksData}
-                    columns={columns}
-                    initialState={{
-                        pagination: {
-                            paginationModel: { pageSize: 20, page: 0 }
-                        }
-                    }}
-                    pageSizeOptions={[20, 50, 100]}
-                    disableRowSelectionOnClick
-                    showToolbar
-                    sx={{
-                        fontFamily: 'inherit'
-                    }}
-                    density='compact'
-                />
+                <Modal show={showModal} onHide={() => handleCloseModal()}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>
+                            {isEdit ? (<>Update Link</>) : (<>Add Link</>)}
+                        </Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-3">
+                                <label htmlFor="campaignTitle" className="form-label">Campaign Title</label>
+                                <input
+                                    type="text"
+                                    className={`form-control ${errors.campaignTitle ? 'is-invalid' : ''}`}
+                                    id="campaignTitle"
+                                    name="campaignTitle"
+                                    value={formData.campaignTitle}
+                                    onChange={handleChange}
+                                />
+                                {errors.campaignTitle && (
+                                    <div className="invalid-feedback">
+                                        {errors.campaignTitle}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="mb-3">
+                                <label htmlFor="originalUrl" className="form-label">URL</label>
+                                <input
+                                    type="text"
+                                    className={`form-control ${errors.originalUrl ? 'is-invalid' : ''}`}
+                                    id="originalUrl"
+                                    name="originalUrl"
+                                    value={formData.originalUrl}
+                                    onChange={handleChange}
+                                />
+                                {errors.originalUrl && (
+                                    <div className="invalid-feedback">
+                                        {errors.originalUrl}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="mb-3">
+                                <label htmlFor="category" className="form-label">Category</label>
+                                <input
+                                    type="text"
+                                    className={`form-control ${errors.category ? 'is-invalid' : ''}`}
+                                    id="category"
+                                    name="category"
+                                    value={formData.category}
+                                    onChange={handleChange}
+                                />
+                                {errors.category && (
+                                    <div className="invalid-feedback">
+                                        {errors.category}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="d-grid">
+                                <button type="submit" className="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </Modal.Body>
+                </Modal>
+
+                <Modal show={showDeleteModal} onHide={() => handleCloseDeleteModal()}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Confirm Delete</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>Are you sure you want to delete the link?</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className='btn btn-secondary' onClick={() => handleCloseDeleteModal()}>
+                            Cancel
+                        </button>
+                        <button className='btn btn-danger' onClick={() => handleDelete()}>
+                            Delete
+                        </button>
+                    </Modal.Footer>
+                </Modal>
             </div>
-
-            <Modal show={showModal} onHide={() => handleCloseModal()}>
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                        {isEdit ? (<>Update Link</>) : (<>Add Link</>)}
-                    </Modal.Title>
-                </Modal.Header>
-
-                <Modal.Body>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                            <label htmlFor="campaignTitle" className="form-label">Campaign Title</label>
-                            <input
-                                type="text"
-                                className={`form-control ${errors.campaignTitle ? 'is-invalid' : ''}`}
-                                id="campaignTitle"
-                                name="campaignTitle"
-                                value={formData.campaignTitle}
-                                onChange={handleChange}
-                            />
-                            {errors.campaignTitle && (
-                                <div className="invalid-feedback">
-                                    {errors.campaignTitle}
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="mb-3">
-                            <label htmlFor="originalUrl" className="form-label">URL</label>
-                            <input
-                                type="text"
-                                className={`form-control ${errors.originalUrl ? 'is-invalid' : ''}`}
-                                id="originalUrl"
-                                name="originalUrl"
-                                value={formData.originalUrl}
-                                onChange={handleChange}
-                            />
-                            {errors.originalUrl && (
-                                <div className="invalid-feedback">
-                                    {errors.originalUrl}
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="mb-3">
-                            <label htmlFor="category" className="form-label">Category</label>
-                            <input
-                                type="text"
-                                className={`form-control ${errors.category ? 'is-invalid' : ''}`}
-                                id="category"
-                                name="category"
-                                value={formData.category}
-                                onChange={handleChange}
-                            />
-                            {errors.category && (
-                                <div className="invalid-feedback">
-                                    {errors.category}
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="d-grid">
-                            <button type="submit" className="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
-                </Modal.Body>
-            </Modal>
-
-            <Modal show={showDeleteModal} onHide={() => handleCloseDeleteModal()}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirm Delete</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>Are you sure you want to delete the link?</p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <button className='btn btn-secondary'
-                        onClick={() => handleCloseDeleteModal()}
-                    >
-                        Cancel
-                    </button>
-                    <button className='btn btn-danger'
-                        onClick={() => handleDelete()}
-                    >
-                        Delete
-                    </button>
-                </Modal.Footer>
-            </Modal>
         </div>
     );
 }

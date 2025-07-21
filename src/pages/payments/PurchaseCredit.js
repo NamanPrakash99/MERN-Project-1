@@ -97,28 +97,28 @@ function PurchaseCredit() {
     };
 
     return (
-        <section className="ezy__pricing10 light py-5" id="ezy__pricing10">
-            <div className="container">
+        <div
+            className="d-flex align-items-center justify-content-center"
+            style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%)' }}
+        >
+            <section className="p-5 bg-white rounded-4 shadow-lg text-center w-100" style={{ maxWidth: 900 }} id="ezy__pricing10">
+                {/* Removed logo/icon placeholder */}
                 {errors.message && <div className="alert alert-danger">{errors.message}</div>}
                 {message && <div className="alert alert-success">{message}</div>}
-
-                <div className="d-flex justify-content-between align-items-start w-100">
+                <div className="d-flex justify-content-between align-items-start w-100 mb-4">
                     <div className="text-left">
-                        <h3 className="ezy__pricing10-heading">Choose Plan</h3>
-                        <p className="ezy__pricing10-sub-heading mt-3">
+                        <h3 className="mb-2" style={{ fontWeight: 700, color: '#1e293b' }}>Choose Plan</h3>
+                        <p className="text-muted mt-3" style={{ fontSize: '1.1rem' }}>
                             Flexible options: one-time credits or recurring subscriptions.
                         </p>
                     </div>
-
                     <div className="text-right">
-                        <h3>Current Balance</h3>
-                        <p className="ezy__pricing10-sub-heading mt-3">
+                        <h3 className="mb-2" style={{ fontWeight: 700, color: '#1e293b' }}>Current Balance</h3>
+                        <p className="text-muted mt-3" style={{ fontSize: '1.1rem' }}>
                             {userDetails.credits} Credits
                         </p>
                     </div>
                 </div>
-
-
                 <div className="row">
                     {/* Credit Pack Card */}
                     <div className="col-md-6 col-xl-4 mt-4 text-center">
@@ -203,8 +203,8 @@ function PurchaseCredit() {
                         ))}
                     </Modal.Body>
                 </Modal>
-            </div>
-        </section>
+            </section>
+        </div>
     );
 }
 

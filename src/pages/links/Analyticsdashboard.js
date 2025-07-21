@@ -100,90 +100,94 @@ function AnalyticsDashboard() {
     }, [analyticsData, fromDate, toDate]);
 
     return (
-        <div className="container py-5">
-            <h1>Analytics for LinkID: {id}</h1>
+        <div
+            className="d-flex align-items-center justify-content-center"
+            style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%)' }}
+        >
+            <div className="p-5 bg-white rounded-4 shadow-lg w-100" style={{ maxWidth: 1100 }}>
+                <h1 className="mb-4" style={{ fontWeight: 700, color: '#1e293b' }}>Analytics for LinkID: {id}</h1>
+                <div className="row mb-4 mx-0 border py-3 border rounded-3 bg-light">
+                    <h5 className="mb-3">Filters:</h5>
+                    <div className="col-md-2">
+                        <DatePicker
+                            selected={fromDate}
+                            onChange={(date) => setFromDate(date)}
+                            className="form-control"
+                            placeholderText="From (Date)"
+                        />
+                    </div>
+                    <div className="col-md-2">
+                        <DatePicker
+                            selected={toDate}
+                            onChange={(date) => setToDate(date)}
+                            className="form-control"
+                            placeholderText="To (Date)"
+                        />
+                    </div>
+                </div>
 
-            <div className="row mb-4 mx-0 border py-3 border">
-                <h5>Filters:</h5>
-                <div className="col-md-2">
-                    <DatePicker
-                        selected={fromDate}
-                        onChange={(date) => setFromDate(date)}
-                        className="form-control"
-                        placeholderText="From (Date)"
-                    />
+                <div className="row mb-4 mx-0 border py-3 rounded">
+                    <div className="col-md-8 p-3 rounded mt-2">
+                        <h5>Clicks by City</h5>
+                        <hr />
+                        <Bar
+                            data={{
+                                labels: Object.keys(clicksByCity),
+                                datasets: [
+                                    {
+                                        label: 'Clicks',
+                                        data: Object.values(clicksByCity),
+                                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                                    }
+                                ]
+                            }}
+                            options={{ responsive: true }}
+
+                        />
+                    </div>
+
+                    <div className="col-md-4 p-3 rounded mt-2">
+                        <h5>Clicks by Browser</h5>
+                        <hr />
+                        <Pie
+                            data={{
+                                labels: Object.keys(clicksByBrowser),
+                                datasets: [
+                                    {
+                                        data: Object.values(clicksByCity),
+                                        backgroundColor: [
+                                            '#FF6384',
+                                            '#36A2EB',
+                                            '#FFCE56',
+                                            '#4BC0C0',
+                                            '#9966FF',
+                                            '#FF9F40',
+                                        ],
+                                    }
+                                ]
+                            }}
+                            options={{ responsive: true }}
+                        />
+                    </div>
                 </div>
-                <div className="col-md-2">
-                    <DatePicker
-                        selected={toDate}
-                        onChange={(date) => setToDate(date)}
-                        className="form-control"
-                        placeholderText="To (Date)"
-                    />
-                </div>
+
+                <DataGrid
+                    getRowId={(row) => row._id}
+                    rows={analyticsData}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                            paginationModel: { pageSize: 20, page: 0 }
+                        }
+                    }}
+                    pageSizeOptions={[20, 50, 100]}
+                    disableRowSelectionOnClick
+                    showToolbar
+                    sx={{
+                        fontFamily: 'inherit'
+                    }}
+                />
             </div>
-
-            <div className="row mb-4 mx-0 border py-3 rounded">
-                <div className="col-md-8 p-3 rounded mt-2">
-                    <h5>Clicks by City</h5>
-                    <hr />
-                    <Bar
-                        data={{
-                            labels: Object.keys(clicksByCity),
-                            datasets: [
-                                {
-                                    label: 'Clicks',
-                                    data: Object.values(clicksByCity),
-                                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                                }
-                            ]
-                        }}
-                        options={{ responsive: true }}
-
-                    />
-                </div>
-
-                <div className="col-md-4 p-3 rounded mt-2">
-                    <h5>Clicks by Browser</h5>
-                    <hr />
-                    <Pie
-                        data={{
-                            labels: Object.keys(clicksByBrowser),
-                            datasets: [
-                                {
-                                    data: Object.values(clicksByCity),
-                                    backgroundColor: [
-                                        '#FF6384',
-                                        '#36A2EB',
-                                        '#FFCE56',
-                                        '#4BC0C0',
-                                        '#9966FF',
-                                        '#FF9F40',
-                                    ],
-                                }
-                            ]
-                        }}
-                        options={{ responsive: true }}
-                    />
-                </div>
-            </div>
-
-            <DataGrid
-                getRowId={(row) => row._id}
-                rows={analyticsData}
-                columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: { pageSize: 20, page: 0 }
-                    }
-                }}
-                pageSizeOptions={[20, 50, 100]}
-                disableRowSelectionOnClick
-                showToolbar
-                sx={{
-                    fontFamily: 'inherit'
-                }}
-            />
         </div>
     );
 }
