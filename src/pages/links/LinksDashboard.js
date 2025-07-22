@@ -326,7 +326,7 @@ function LinksDashboard() {
                                 paginationModel: { pageSize: pageSize, page: currentPage }
                             }
                         }}
-                        pageSizeOptions={[2, 3, 4]}
+                        pageSizeOptions={[20, 50, 100]}
                         paginationMode='server'
                         onPaginationModelChange={(newPage) => {
                             setcurrentPage(newPage.page);
