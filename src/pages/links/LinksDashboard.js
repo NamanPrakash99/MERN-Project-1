@@ -214,7 +214,7 @@ function LinksDashboard() {
 
     const columns = [
         {
-            field: 'thumbnail', headerName: 'Thumbnail', sortable: false, flex: 1,
+            field: 'thumbnail', headerName: 'Thumbnail', sortable: false, flex: 1.5,
             renderCell: (params) => (
                 params.row.thumbnail ? (
                     <img src={params.row.thumbnail} alt='thumbnail' style={{ maxHeight: '45px' }} />
@@ -223,7 +223,7 @@ function LinksDashboard() {
                 )
             ),
         },
-        { field: 'campaignTitle', headerName: 'Campaign', flex: 2 },
+        { field: 'campaignTitle', headerName: 'Campaign', flex: 1.5 },
         {
             field: 'originalUrl', headerName: 'URL', flex: 3, renderCell: (params) => (
                 <>
@@ -239,7 +239,7 @@ function LinksDashboard() {
         { field: 'category', headerName: 'Category', flex: 2 },
         { field: 'clickCount', headerName: 'Clicks', flex: 1 },
         {
-            field: 'action', headerName: 'Clicks', flex: 2.5, sortable: false, renderCell: (params) => (
+            field: 'action', headerName: 'Clicks', flex: 2, sortable: false, renderCell: (params) => (
                 <>
                     {permission.canEditLink && (
                         <IconButton>
