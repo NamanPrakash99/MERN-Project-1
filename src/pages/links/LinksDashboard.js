@@ -26,7 +26,7 @@ function LinksDashboard() {
 
     const [loading, setLoading] = useState(false);
     const [currentPage, setcurrentPage] = useState(0);
-    const [pageSize, setPageSize] = useState(2);
+    const [pageSize, setPageSize] = useState(10);
     const [searchQuery, setSearchQuery] = useState('');
     const [totalRecords, setTotalRecords] = useState(0);
     const [sortModel, setSortModel] = useState([
@@ -326,7 +326,7 @@ function LinksDashboard() {
                                 paginationModel: { pageSize: pageSize, page: currentPage }
                             }
                         }}
-                        pageSizeOptions={[6, 8, 10]}
+                        pageSizeOptions={[10, 30, 50, 100]}
                         paginationMode='server'
                         onPaginationModelChange={(newPage) => {
                             setcurrentPage(newPage.page);
