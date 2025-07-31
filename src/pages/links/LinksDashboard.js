@@ -214,7 +214,7 @@ function LinksDashboard() {
 
     const columns = [
         {
-            field: 'thumbnail', headerName: 'Thumbnail', sortable: false, flex: 1.5,
+            field: 'thumbnail', headerName: 'Thumbnail', sortable: false, flex: 1,
             renderCell: (params) => (
                 params.row.thumbnail ? (
                     <img src={params.row.thumbnail} alt='thumbnail' style={{ maxHeight: '45px' }} />
@@ -326,7 +326,7 @@ function LinksDashboard() {
                                 paginationModel: { pageSize: pageSize, page: currentPage }
                             }
                         }}
-                        pageSizeOptions={[20, 50, 100]}
+                        pageSizeOptions={[6, 8, 10]}
                         paginationMode='server'
                         onPaginationModelChange={(newPage) => {
                             setcurrentPage(newPage.page);
